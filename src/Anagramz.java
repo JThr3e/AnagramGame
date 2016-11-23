@@ -37,7 +37,7 @@ public class Anagramz {
 		HashMap<String, ArrayList<Word>> anagrams = new HashMap<String, ArrayList<Word>>();
 		try {
 			//Scan Through a file of words in the English language to organize words into teh HashMap
-			Scanner file = new Scanner(new File("words.txt"));
+			Scanner file = new Scanner(new File("googleWords.txt"));
 			while (file.hasNextLine()) {
 				String word = file.nextLine();
 				char a[] = word.toCharArray();
@@ -97,7 +97,7 @@ public class Anagramz {
 			}
 			
 			//Find all aID combos using a Utility
-			for(int i = 4; i < chosenAID.length(); i++){
+			for(int i = 3; i < chosenAID.length(); i++){
 				HashSet<String> combos = new HashSet<String>();
 				Combinations.findCombinations(chosenAID.toCharArray(), chosenAID.length(), i, combos);
 				allPossibleAIDCombos.addAll(combos);
@@ -128,7 +128,14 @@ public class Anagramz {
 			String in = JOptionPane.showInputDialog("Enter words that use these letters: "+chosenAID+"\n"+wordsWithChosenAID.size()+" words left."+"\n Enter ZZZZZ to give up!");
 			wordsWithChosenAID.remove(in);
 			if(in.equals("ZZZZZ")){
-				JOptionPane.showMessageDialog(null, "You missed "+wordsWithChosenAID.toString());
+				String missed = "";
+				int mod = 0;
+				for(String s : wordsWithChosenAID){
+					mod++;
+					missed += (s + " ");
+					if(mod%20 == 0) missed += "\n";
+				}
+				JOptionPane.showMessageDialog(null, "You missed\n"+missed);
 				quit = true;
 			}
 		}
